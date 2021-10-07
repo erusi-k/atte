@@ -15,4 +15,11 @@ class Attendance extends Model
         'punchIn',
         'punchOut',
     ];
+
+    public function user() 
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    
 }

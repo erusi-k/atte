@@ -27,7 +27,7 @@ class BreakTimeController extends Controller
     public function store(Request $request)
     {
         $time = carbon::now();
-        $item = BreakTime::create(['user_id'=>$request->user_id,'attendance_id'=>$request->attendance_id,'day'=>$time,'breakIn'=>$time]);
+        $item = BreakTime::create(['user_id'=>$request->user_id,'day'=>$time,'breakIn'=>$time]);
         if($item){
             return response()->json([
                 'message'=>'休憩に入りました！',

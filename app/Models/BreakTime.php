@@ -11,7 +11,6 @@ class BreakTime extends Model
 
     protected $fillable = [
         'user_id',
-        'attendance_id',
         'day',
         'breakIn',
         'breakOut',

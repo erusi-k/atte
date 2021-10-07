@@ -1,0 +1,18 @@
+body {
+    font-family:"游ゴシック","ヒラギノ丸ゴ Pro",sans-serif;
+}
+
+.header {
+    display:flex;
+    justify-content:space-between;
+}
+.header-list {
+    display:flex;
+    list-style:none;
+}
+.header-list_content {
+    margin-left:15px;
+}
+.footer {
+    text-align:center;
+}

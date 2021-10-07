@@ -16,16 +16,7 @@ class AttendanceController extends Controller
      */
     public function index(Request $request)
     {
-        $day = carbon::now();
-        $items = Attendance::where(['user_id'=>$request->user_id])->get();
-        foreach($items as $item){
-            if(empty($item->punchOut)&&$item->day = $day){
-                $attendanceId = $item->id;
-            }
-        }  
-        return response()->json([
-            'data'=>$attendanceId
-        ]);  
+        
     }
 
     /**

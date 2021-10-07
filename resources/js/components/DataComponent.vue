@@ -1,20 +1,41 @@
 <template>
-<div>
-    <p>{{day.format('YYYY-MM-DD')}}</p>
-    <p @click="addDay">→</p>
-    <p @click="subtractDay">⇦</p>
-    <p>これはテストです！</p>
-    <p @click="requestData">データ取得ボタン</p>
-    <p v-for="data in datas" :key="data.id">{{data.id}}</p>
-    <ul class="pagination">
-        <li class="inactive" :class="(current_page == 1) ? 'disabled':''" @click ="changePage(current_page-1)">＜＜</li>
-        <li v-for="page in frontPageRange" :key="page" @click="changePage(page)" :class="(isCurrent(page)) ? 'active':'inactive'">{{page}}</li>
-        <li v-show="front_dot" class="inactive disabled">...</li>
-        <!-- <li v-for="page in middlePageRange" :key="page" @click="changePage(page)" :class="(isCurrent(page)) ? 'active':'inactive'">{{page}}</li> -->
-        <li v-show="end_dot" class="inactive disabled">...</li>
-        <li v-for="page in endPageRange" :key="page" @click="changePage(page)" :class="(isCurrent(page)) ? 'active':'inactive'">{{page}}</li>
-        <li class="inactive" :class="(current_page >= last_page) ? 'disabled':''" @click="changePage(current_page+1)">＞＞</li>
-    </ul>
+<div id="app">
+    <div class="content">
+        <div class="day"  @click="requestData">
+            <img class="day_sub" src="/images/ya.png" @click="subtractDay">
+            <p class="day_display">{{day.format('YYYY-MM-DD')}}</p>
+            <img class="day_add" src="/images/ya.png" @click="addDay">
+            </div>
+        <p class="content-message" v-if="message">実績がありません。</p>
+        <table v-else>
+            <tr>
+                <th>名前</th>
+                <th>勤務開始時間</th>
+                <th>勤務終了時間</th>
+                <th>休憩時間</th>
+                <th>勤務時間</th>
+            </tr>
+            
+            <tr  v-for="data in datas" :key="data.id">
+                <td>{{data.name}}</td>
+                <td>{{data.punchIn}}</td>
+                <td>{{data.punchOut}}</td>
+                <td>{{data.break}}</td>
+                <td>{{data.total}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="pagination">
+        <ul class="pagination_content">
+            <li class="inactive" :class="(current_page == 1) ? 'disabled':''" @click ="changePage(current_page-1)">＜＜</li>
+            <li v-for="page in frontPageRange" :key="page" @click="changePage(page)" :class="(isCurrent(page)) ? 'active':'inactive'">{{page}}</li>
+            <li v-show="front_dot" class="inactive disabled">...</li>
+            <li v-for="page in middlePageRange" :key="page" @click="changePage(page)" :class="(isCurrent(page)) ? 'active':'inactive'">{{page}}</li>
+            <li v-show="end_dot" class="inactive disabled">...</li>
+            <li v-for="page in endPageRange" :key="page" @click="changePage(page)" :class="(isCurrent(page)) ? 'active':'inactive'">{{page}}</li>
+            <li class="inactive" :class="(current_page >= last_page) ? 'disabled':''" @click="changePage(current_page+1)">＞＞</li>
+        </ul>
+    </div>
 </div>
 </template>
 
@@ -31,17 +52,18 @@ export default {
             range:5,
             front_dot:false,
             end_dot:false,
-            size:1,
+            size:2,
+            message:true,
         }
     },
     created(){
-        
+        this.requestData();
     },
     computed:{
         frontPageRange(){
-            // if(!this.sizeCheck){
-            //     return this.calRange(1,this.last_page);
-            // }
+            if(!this.sizeCheck){
+                return this.calRange(1,this.last_page);
+            }
             return this.calRange(1,2);
         },
         middlePageRange(){
@@ -69,7 +91,10 @@ export default {
             return this.calRange(start,end);
         },
         endPageRange(){
-            return this.calRange(this.last_page-1, this.last_page);
+            if(this.last_page == 1){
+                return this.calRange(2,1);
+            }
+            return this.calRange(this.last_page -1, this.last_page);
         },
         sizeCheck(){
             if(this.last_page < this.size) {
@@ -93,11 +118,18 @@ export default {
             let item = this.day.format('YYYY-MM-DD')
             const request =await axios.get(`http://localhost:8000/api/datarequest?page=${this.current_page}`,{params:{day:item}});
             this.datas = request.data.data.data;
+            if(request.data.data.data.length >0){
+                this.message = false;
+            }else{
+                this.message = true;
+            }
+            console.log(this.message);
             this.current_page = request.data.data.current_page;
             this.last_page = request.data.data.last_page;
-
+            console.log(request.data.data.data.length);
             console.log(request.data);
             console.log(request.data.day);
+            console.log(request.data.test);
             this.check();
         },
         calRange(start,end){
@@ -127,17 +159,30 @@ export default {
 </script>
 
 <style scoped>
+
+/* ページーネーションのスタイル */
 .pagination {
+    width:100%;
+    margin:65px 0;
+    
+    
+}
+
+.pagination_content {
     display:flex;
     list-style-type:none;
+    width:80%;
+    justify-content: center;
+    padding-left: 0;
+    
 }
-.pagination li {
+.pagination_content li {
     border:1px solid #ddd;
     padding:6px 12px;
     text-align: center;
 }
 
-.pagination li + li {
+.pagination_content li + li {
     border-left:none;
 }
 
@@ -145,8 +190,85 @@ export default {
     background-color:aqua;
 }
 
+
+
 .disabled { 
     cursor:not-allowed;
 }
+
+#app {
+    width: 100%;
+    font-family:"游ゴシック","ヒラギノ丸ゴ Pro",sans-serif;
+}
+
+h2 {
+    text-align: center;
+}
+
+img { 
+    display:block;
+}
+
+ul { 
+    margin:auto;
+}
+
+.content {
+    width:100%;
+}
+
+.day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.day_display{ 
+    margin:65px 30px
+}
+
+.day_sub {
+    transform: scale(-1,1);
+}
+
+.content-message {
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 5px;
+    margin: 0 auto;
+    padding: 0;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+table th,
+table td {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+table th {
+    padding: 15px 0;
+    font-size: 14px;
+    text-align: center;
+}
+table tr{
+    text-align: center;
+    padding: 20px 0;
+    background-color: #fff;
+    color:#000000;
+}
+
+img { 
+    width:20px;
+    height:20px;
+}
+
+
 </style>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\BreakTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -18,28 +19,46 @@ class CheckAttendanceController extends Controller
     {
         
         $oldtimein = Attendance::where('user_id',$request->user_id)->latest()->first();
+        $breaktimein = BreakTime::where('user_id',$request->user_id)->latest()->first();
 
         $oldDay = '';
+        $breakDay = '';
         
         if($oldtimein){
             $oldTimePunchIn = new Carbon($oldtimein->punchIn);
             $oldDay = $oldTimePunchIn->startOfDay();
         }
+        if($breaktimein){
+            $oldTimeBreakIn = new Carbon($breaktimein->breakIn);
+            $breakDay = $oldTimeBreakIn->startOfDay();
+        }
         $today  = Carbon::today();
 
         if(($oldDay == $today) && (empty($oldtimein->punchOut))){
-            return response()->json([
-                'time'=>false
-            ]);
+            
+            $punchIn=false;
+            $punchOut=true;
+            if(($breakDay == $today) && (empty($breaktimein->breakOut))){
+                $breakIn = false;
+                $breakOut = true;
+            }else {
+                $breakIn = true;
+                $breakOut =false;
+                }
+
         }else{
-            return  response()->json([
-                'time'=>true
-            ]);
+            $punchIn = true;
+            $punchOut = false;
+            $breakIn =  false;
+            $breakOut = false;
         }
 
-        
-        
-        
+        return response()->json([
+            'punchIn'=>$punchIn,
+            'punchOut'=>$punchOut,
+            'breakIn'=>$breakIn,
+            'breakOut'=>$breakOut,
+        ]);     
     }
 
     /**

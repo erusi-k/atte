@@ -1,13 +1,19 @@
 <template>
-    <div>
-        <p>{{message}}</p>
-        <p v-if="inStatus" @click="punchIn();stechang()">出勤です！</p>
-        <p v-else>出勤消えてます！</p>
-        <p @click="punchOut">退勤です！</p>
-        <p>{{user_id}}</p>
-        <p @click="breakIn">休憩入り</p>
-        <p @click="breakOut">休憩戻り</p>
-        <p>{{attendanceId}}</p>
+    <div class="content">
+        <h2>{{message}}</h2>
+        <div class="content_punch" >
+            <p v-if="punchInStatus" @click="punchIn()">勤務開始</p>
+            <p v-else class="inactive">勤務開始</p>
+            <p v-if="punchOutStatus" @click="punchOut" >勤務終了</p>
+            <p v-else class="inactive">勤務終了</p>
+
+        </div>
+        <div class="content_break">
+            <p v-if="breakInStatus" @click="breakIn">休憩開始</p>
+            <p v-else class="inactive">休憩開始</p>
+            <p v-if="breakOutStatus" @click="breakOut">休憩終了</p>
+            <p v-else class="inactive">休憩終了</p>
+        </div>
     </div>
 </template>
 
@@ -16,9 +22,11 @@ export default {
     props:['user_id'],
     data(){
         return {
-            inStatus:true,
+            punchInStatus:true,
+            punchOutStatus:false,
+            breakInStatus:false,
+            breakOutStatus:false,
             message:'',
-            attendanceId:''
 
         }
     },
@@ -30,48 +38,95 @@ export default {
             }
             const response = await axios.post("http://localhost:8000/api/attendance",sendData);
             this.attendance_id=response.data.data.id;
+            this.punchInStatus = false;
+            this.punchOutStatus = true;
+            this.breakInStatus = true;
         },
         async punchOut(){
+            
             const id = this.user_id;
             const response = await axios.put("http://localhost:8000/api/attendance/"+id);
             console.log(response.data);
+            this.punchInStatus = true;
+            this.punchOutStatus = false;
+            this.breakInStatus = false;
+            this.breakOutStatus =false;
         },
 
         async breakIn(){
             const sendData ={
                 user_id:this.user_id,
-                attendance_id:this.attendanceId
             }
             const response = await axios.post("http://localhost:8000/api/breaktime",sendData);
             this.message = response.data.message
+            this.breakInStatus = false;
+            this.breakOutStatus = true;
+
         },
 
         async breakOut(){
             const id = this.user_id;
             const response = await axios.put("http://localhost:8000/api/breaktime/"+id);
-            this.message = response.data.message
+            this.message = response.data.message;
+            this.breakInStatus = true;
+            this.breakOutStatus = false;
         },
 
-        async checkPunchIn(){
+        async checkPunch(){
     
             const response = await axios.get("http://localhost:8000/api/checkattendance",{params:{user_id:this.user_id}});
-            this.inStatus = response.data.time;
-            console.log(response.data.id);
+            this.punchInStatus = response.data.punchIn;
+            this.punchOutStatus = response.data.punchOut;
+            this.breakInStatus = response.data.breakIn;
+            this.breakOutStatus = response.data.breakOut;
+            console.log(response.data);
         },
-
-        async getAttendanceId(){
-            const response = await axios.get("http://localhost:8000/api/attendance",{params:{user_id:this.user_id}});
-            this.attendanceId = response.data.data;
-            console.log(response.data.data);
-        },
-
-        stechang(){
-            this.inStatus = false
-        }
     },
     created(){
-        this.checkPunchIn();
-        this.getAttendanceId();
+        this.checkPunch();
     }
 }
 </script>
+
+<style scoped>
+p {
+    width: 45%;
+    text-align: center;
+    line-height: 150px;
+    height: 150px;
+    margin: 0;
+    font-size: 2rem;
+    background-color:#fff;
+    
+}
+
+.content {
+    width:100%;
+    background-color:#cccccc;
+    padding:30px;
+    font-family:"游ゴシック","ヒラギノ丸ゴ Pro",sans-serif;
+    
+}
+
+.content_punch {
+    display:flex;
+    justify-content:space-between;
+    width:80%;
+    margin:35px auto;
+    
+
+}
+
+.content_break { 
+    display:flex;
+    justify-content:space-between;
+    width:80%;
+    margin:auto;
+}
+
+.inactive {
+    color:#eeeeee;
+}
+
+
+</style>
