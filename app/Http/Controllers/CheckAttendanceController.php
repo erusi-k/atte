@@ -41,6 +41,7 @@ class CheckAttendanceController extends Controller
             if(($breakDay == $today) && (empty($breaktimein->breakOut))){
                 $breakIn = false;
                 $breakOut = true;
+                $punchOut  = false;
             }else {
                 $breakIn = true;
                 $breakOut =false;

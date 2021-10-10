@@ -20,6 +20,7 @@
 <script>
 export default {
     props:['user_id'],
+    
     data(){
         return {
             punchInStatus:true,
@@ -41,6 +42,7 @@ export default {
             this.punchInStatus = false;
             this.punchOutStatus = true;
             this.breakInStatus = true;
+            this.message ='出勤しました！'
         },
         async punchOut(){
             
@@ -51,6 +53,7 @@ export default {
             this.punchOutStatus = false;
             this.breakInStatus = false;
             this.breakOutStatus =false;
+            this.message = '退勤しました！'
         },
 
         async breakIn(){
@@ -61,6 +64,7 @@ export default {
             this.message = response.data.message
             this.breakInStatus = false;
             this.breakOutStatus = true;
+            this.punchOutStatus = false;
 
         },
 
@@ -70,6 +74,7 @@ export default {
             this.message = response.data.message;
             this.breakInStatus = true;
             this.breakOutStatus = false;
+            this.punchOutStatus = true;
         },
 
         async checkPunch(){

@@ -2381,8 +2381,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.punchInStatus = false;
                 _this.punchOutStatus = true;
                 _this.breakInStatus = true;
+                _this.message = '出勤しました！';
 
-              case 8:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -2410,8 +2411,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.punchOutStatus = false;
                 _this2.breakInStatus = false;
                 _this2.breakOutStatus = false;
+                _this2.message = '退勤しました！';
 
-              case 9:
+              case 10:
               case "end":
                 return _context2.stop();
             }
@@ -2439,8 +2441,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this3.message = response.data.message;
                 _this3.breakInStatus = false;
                 _this3.breakOutStatus = true;
+                _this3.punchOutStatus = false;
 
-              case 7:
+              case 8:
               case "end":
                 return _context3.stop();
             }
@@ -2466,8 +2469,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this4.message = response.data.message;
                 _this4.breakInStatus = true;
                 _this4.breakOutStatus = false;
+                _this4.punchOutStatus = true;
 
-              case 7:
+              case 8:
               case "end":
                 return _context4.stop();
             }

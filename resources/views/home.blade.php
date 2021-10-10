@@ -3,6 +3,7 @@
 @section('title','打刻画面')
 
 @section('content')
+    <p class="user_name">{{$user->name}}さん</p>
     <punchin-component v-bind:user_id="{{$user->id}}"></punchin-component>
-    <p>{{$user->name}}</p>
+
 @endsection

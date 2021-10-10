@@ -1,55 +1,39 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-            </a>
-        </x-slot>
+@extends('layouts.firstbase')
 
+@section('title','ログインページ')
+@section('content')
         <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+        <x-auth-session-status  :status="session('status')" />
 
         <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+        <x-auth-validation-errors class="errors"  :errors="$errors" />
         
-        <form method="POST" action="{{ route('login') }}" class="text-center">
+        <form method="POST" action="{{ route('login') }}"  >
             @csrf
-            <p>ログイン</p>
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
+            <div class="login">
+                <div class="title">
+                    <p class="title_content">ログイン</p>
+                </div>
+                <!-- Emai Address -->
+                <div class="input">
+                    <x-input  class="input-content"  type="email" name="email" :value="old('email')" placeholder="メールアドレス" required autofocus />
+                </div>
 
-                <x-input id="email" class="block mt-1 w-full border-gray-300" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
-            </div>
-
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ml-3">
-                    {{ __('Log in') }}
-                </x-button>
+                <!-- Password -->
+                <div class="input">
+                    <input class="input-content" class="btn"
+                                    type="password"
+                                    name="password"
+                                    placeholder="パスワード"
+                                    required autocomplete="current-password" />
+                </div>
+                <div class="btn">
+                    <button class="btn_content">
+                        {{ __('Log in') }}
+                    </button>
+                </div>
             </div>
         </form>
-    </x-auth-card>
-</x-guest-layout>
+        <p class="link">アカウントをお持ちでない方はこちらから</p>
+        <a class="link-url" href="{{url('/register')}}">会員登録</a>
+@endsection

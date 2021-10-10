@@ -12,21 +12,24 @@ class DataController extends Controller
 {
     public function index(Request $request){
         $day = new Carbon($request->day);
-        $items = Attendance::where('day',$day)->paginate(3);
+        $items = Attendance::where('day',$day)->paginate(5);
         $breakSum='';
         $userName=[];
         $totalBreak=[];
         $i = 0;
         $l = 0;
         foreach($items as $item){
-            $breaks = BreakTime::where('user_id',$item->user_id)->get();
-            // if(count($breaks) >= 1){
-                foreach($breaks as $break){
-                    $breakIn = new Carbon($break->breakIn);
-                    $breakOut = new Carbon($break->breakOut);
-                    $breakSeconds = $breakIn->diffInseconds($breakOut);
-                    $breakAll =+ $breakSeconds;
-                }
+            $breaks = BreakTime::where('user_id',$item->user_id)->where('day',$day)->get();
+                if($breaks->isEmpty()){
+                    $breakAll = 0;
+                }else{
+                    foreach($breaks as $break){
+                        $breakIn = new Carbon($break->breakIn);
+                        $breakOut = new Carbon($break->breakOut);
+                        $breakSeconds = $breakIn->diffInseconds($breakOut);
+                        $breakAll =+ $breakSeconds;
+                    }
+                }    
             $punchIn = new Carbon($item->punchIn);
             $punchOut = new Carbon($item->punchOut);
             $punchSeconds = $punchOut->diffInseconds($punchIn);

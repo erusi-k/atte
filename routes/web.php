@@ -20,10 +20,6 @@ Route::get('/', function () {
 });
 Route::get('/home',[HomeController::class,'index'])->middleware('auth');
 Route::get('/datalist',[DataController::class,'show']);
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [HomeController::class,'index']);
 
 require __DIR__.'/auth.php';
