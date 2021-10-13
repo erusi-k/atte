@@ -116,14 +116,19 @@ export default {
     },
 
     methods:{
+        // 日付1日追加
         addDay(){
             let day = moment(this.day);
             this.day = day.add(1,'days');
         },
+
+        // 日付1日削除
         subtractDay(){
             let day = moment(this.day);
             this.day = day.subtract(1,'days');
         },
+
+        // 実績データ取得処理
         async requestData(){
             let item = this.day.format('YYYY-MM-DD')
             const request =await axios.get(`http://localhost:8000/api/datarequest?page=${this.current_page}`,{params:{day:item}});
@@ -133,11 +138,10 @@ export default {
             }else{
                 this.message = true;
             }
-            console.log(this.message);
             this.current_page = request.data.data.current_page;
             this.last_page = request.data.data.last_page;
-            this.check();
         },
+
         calRange(start,end){
             const renge = [];
             for(let i = start;i <= end; i++){
@@ -154,11 +158,6 @@ export default {
         isCurrent(page){
             return page === this.current_page;
         },
-
-        check(){
-            console.log(this.last_page);
-        }
-        
     }
 
 }
