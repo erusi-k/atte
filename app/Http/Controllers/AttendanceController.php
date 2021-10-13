@@ -25,13 +25,14 @@ class AttendanceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    //出勤打刻処理
     public function store(Request $request)
     {
-        
         $time = carbon::now();
         $item = Attendance::create(['user_id'=>$request->user_id,'day'=>$time,'punchIn'=>$time]);
         return response()->json([
-            'data'=>$item,
+            'data'=>$item
         ],201);
     }
 
@@ -53,6 +54,8 @@ class AttendanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //退勤打刻処理
     public function update(Request $request, $id)
     {
         $timestamp = Attendance::where('user_id',$id)->latest()->first();

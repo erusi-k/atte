@@ -2127,6 +2127,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2138,8 +2139,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       range: 5,
       front_dot: false,
       end_dot: false,
-      size: 2,
-      message: true
+      end: false,
+      message: true,
+      size: 8
     };
   },
   created: function created() {
@@ -2158,6 +2160,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var end = "";
 
       if (!this.sizeCheck) {
+        this.front_dot = false;
+        this.end_dot = false;
         return [];
       }
 
@@ -2181,14 +2185,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.calRange(start, end);
     },
     endPageRange: function endPageRange() {
-      if (this.last_page == 1) {
-        return this.calRange(2, 1);
+      if (!this.sizeCheck) {
+        return [];
       }
 
       return this.calRange(this.last_page - 1, this.last_page);
     },
     sizeCheck: function sizeCheck() {
       if (this.last_page < this.size) {
+        return false;
+      }
+
+      return true;
+    },
+    pageCheck: function pageCheck() {
+      if (this.last_page == 1) {
         return false;
       }
 
@@ -2234,14 +2245,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 console.log(_this.message);
                 _this.current_page = request.data.data.current_page;
                 _this.last_page = request.data.data.last_page;
-                console.log(request.data.data.data.length);
-                console.log(request.data);
-                console.log(request.data.day);
-                console.log(request.data.test);
 
                 _this.check();
 
-              case 14:
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -2348,6 +2355,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['user_id'],
   data: function data() {
@@ -2356,6 +2364,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       punchOutStatus: false,
       breakInStatus: false,
       breakOutStatus: false,
+      finStatus: false,
       message: ''
     };
   },
@@ -2377,13 +2386,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 response = _context.sent;
-                _this.attendance_id = response.data.data.id;
                 _this.punchInStatus = false;
                 _this.punchOutStatus = true;
                 _this.breakInStatus = true;
                 _this.message = '出勤しました！';
 
-              case 9:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -2407,7 +2415,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 response = _context2.sent;
                 console.log(response.data);
-                _this2.punchInStatus = true;
+                _this2.punchInStatus = false;
                 _this2.punchOutStatus = false;
                 _this2.breakInStatus = false;
                 _this2.breakOutStatus = false;
@@ -2501,9 +2509,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this5.punchOutStatus = response.data.punchOut;
                 _this5.breakInStatus = response.data.breakIn;
                 _this5.breakOutStatus = response.data.breakOut;
+                _this5.finStatus = response.data.fin;
+                console.log(response.data.test);
                 console.log(response.data);
 
-              case 8:
+              case 10:
               case "end":
                 return _context5.stop();
             }
@@ -2511,6 +2521,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee5);
       }))();
     }
+  },
+  computed: {
+    finMessage: function finMessage() {}
   },
   created: function created() {
     this.checkPunch();
@@ -7060,7 +7073,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ページーネーションのスタイル */\n.pagination[data-v-65d612d0] {\n    width:100%;\n    margin:65px 0;\n}\n.pagination_content[data-v-65d612d0] {\n    display:flex;\n    list-style-type:none;\n    width:80%;\n    justify-content: center;\n    padding-left: 0;\n}\n.pagination_content li[data-v-65d612d0] {\n    border:1px solid #ddd;\n    padding:6px 12px;\n    text-align: center;\n}\n.pagination_content li + li[data-v-65d612d0] {\n    border-left:none;\n}\n.active[data-v-65d612d0] {\n    background-color:aqua;\n}\n.disabled[data-v-65d612d0] { \n    cursor:not-allowed;\n}\n#app[data-v-65d612d0] {\n    width: 100%;\n    font-family:\"游ゴシック\",\"ヒラギノ丸ゴ Pro\",sans-serif;\n}\nh2[data-v-65d612d0] {\n    text-align: center;\n}\nimg[data-v-65d612d0] { \n    display:block;\n}\nul[data-v-65d612d0] { \n    margin:auto;\n}\n.content[data-v-65d612d0] {\n    width:100%;\n}\n.day[data-v-65d612d0] {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n.day_display[data-v-65d612d0]{ \n    margin:65px 30px\n}\n.day_sub[data-v-65d612d0] {\n    transform: scale(-1,1);\n}\n.content-message[data-v-65d612d0] {\n    text-align: center;\n}\ntable[data-v-65d612d0] {\n    border-collapse: collapse;\n    border-spacing: 5px;\n    margin: 0 auto;\n    padding: 0;\n    width: 90%;\n    margin-left: auto;\n    margin-right: auto;\n}\ntable th[data-v-65d612d0],\ntable td[data-v-65d612d0] {\n    padding: 10px 0;\n    border-bottom: 1px solid #eee;\n}\ntable th[data-v-65d612d0] {\n    padding: 15px 0;\n    font-size: 14px;\n    text-align: center;\n}\ntable tr[data-v-65d612d0]{\n    text-align: center;\n    padding: 20px 0;\n    background-color: #fff;\n    color:#000000;\n}\nimg[data-v-65d612d0] { \n    width:20px;\n    height:20px;\n}\n\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* ページーネーションのスタイル */\n.pagination[data-v-65d612d0] {\n    width:100%;\n    margin:65px 0;\n}\n.pagination_content[data-v-65d612d0] {\n    display:flex;\n    list-style-type:none;\n    width:80%;\n    justify-content: center;\n    padding-left: 0;\n}\n.pagination_content li[data-v-65d612d0] {\n    border:1px solid #ddd;\n    padding:6px 12px;\n    text-align: center;\n}\n.pagination_content li + li[data-v-65d612d0] {\n    border-left:none;\n}\n.active[data-v-65d612d0] {\n    background-color:aqua;\n}\n.disabled[data-v-65d612d0] { \n    cursor:not-allowed;\n}\n#app[data-v-65d612d0] {\n    width: 100%;\n    font-family:\"游ゴシック\",\"ヒラギノ丸ゴ Pro\",sans-serif;\n}\nh2[data-v-65d612d0] {\n    text-align: center;\n}\nimg[data-v-65d612d0] { \n    display:block;\n}\nul[data-v-65d612d0] { \n    margin:auto;\n}\n.content[data-v-65d612d0] {\n    width:100%;\n}\n.day[data-v-65d612d0] {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n.day_display[data-v-65d612d0]{ \n    margin:65px 30px\n}\n.day_sub[data-v-65d612d0] {\n    transform: scale(-1,1);\n}\n.content-message[data-v-65d612d0] {\n    text-align: center;\n}\ntable[data-v-65d612d0] {\n    border-collapse: collapse;\n    border-spacing: 5px;\n    margin: 0 auto;\n    padding: 0;\n    width: 90%;\n    margin-left: auto;\n    margin-right: auto;\n}\ntable th[data-v-65d612d0],\ntable td[data-v-65d612d0] {\n    padding: 10px 0;\n    border-bottom: 1px solid #eee;\n}\ntable th[data-v-65d612d0] {\n    padding: 15px 0;\n    font-size: 14px;\n    text-align: center;\n}\ntable tr[data-v-65d612d0]{\n    text-align: center;\n    padding: 20px 0;\n    background-color: #fff;\n    color:#000000;\n}\nimg[data-v-65d612d0] { \n    width:20px;\n    height:20px;\n}\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -60955,122 +60968,124 @@ var render = function() {
           )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "pagination" }, [
-      _c(
-        "ul",
-        { staticClass: "pagination_content" },
-        [
+    _vm.pageCheck
+      ? _c("div", { staticClass: "pagination" }, [
           _c(
-            "li",
-            {
-              staticClass: "inactive",
-              class: _vm.current_page == 1 ? "disabled" : "",
-              on: {
-                click: function($event) {
-                  return _vm.changePage(_vm.current_page - 1)
-                }
-              }
-            },
-            [_vm._v("＜＜")]
-          ),
-          _vm._v(" "),
-          _vm._l(_vm.frontPageRange, function(page) {
-            return _c(
-              "li",
-              {
-                key: page,
-                class: _vm.isCurrent(page) ? "active" : "inactive",
-                on: {
-                  click: function($event) {
-                    return _vm.changePage(page)
-                  }
-                }
-              },
-              [_vm._v(_vm._s(page))]
-            )
-          }),
-          _vm._v(" "),
-          _c(
-            "li",
-            {
-              directives: [
+            "ul",
+            { staticClass: "pagination_content" },
+            [
+              _c(
+                "li",
                 {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.front_dot,
-                  expression: "front_dot"
-                }
-              ],
-              staticClass: "inactive disabled"
-            },
-            [_vm._v("...")]
-          ),
-          _vm._v(" "),
-          _vm._l(_vm.middlePageRange, function(page) {
-            return _c(
-              "li",
-              {
-                key: page,
-                class: _vm.isCurrent(page) ? "active" : "inactive",
-                on: {
-                  click: function($event) {
-                    return _vm.changePage(page)
+                  staticClass: "inactive",
+                  class: _vm.current_page == 1 ? "disabled" : "",
+                  on: {
+                    click: function($event) {
+                      return _vm.changePage(_vm.current_page - 1)
+                    }
                   }
-                }
-              },
-              [_vm._v(_vm._s(page))]
-            )
-          }),
-          _vm._v(" "),
-          _c(
-            "li",
-            {
-              directives: [
+                },
+                [_vm._v("«")]
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.frontPageRange, function(page) {
+                return _c(
+                  "li",
+                  {
+                    key: page,
+                    class: _vm.isCurrent(page) ? "active" : "inactive",
+                    on: {
+                      click: function($event) {
+                        return _vm.changePage(page)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(page))]
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "li",
                 {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.end_dot,
-                  expression: "end_dot"
-                }
-              ],
-              staticClass: "inactive disabled"
-            },
-            [_vm._v("...")]
-          ),
-          _vm._v(" "),
-          _vm._l(_vm.endPageRange, function(page) {
-            return _c(
-              "li",
-              {
-                key: page,
-                class: _vm.isCurrent(page) ? "active" : "inactive",
-                on: {
-                  click: function($event) {
-                    return _vm.changePage(page)
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.front_dot,
+                      expression: "front_dot"
+                    }
+                  ],
+                  staticClass: "inactive disabled"
+                },
+                [_vm._v("...")]
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.middlePageRange, function(page) {
+                return _c(
+                  "li",
+                  {
+                    key: page,
+                    class: _vm.isCurrent(page) ? "active" : "inactive",
+                    on: {
+                      click: function($event) {
+                        return _vm.changePage(page)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(page))]
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.end_dot,
+                      expression: "end_dot"
+                    }
+                  ],
+                  staticClass: "inactive disabled"
+                },
+                [_vm._v("...")]
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.endPageRange, function(page) {
+                return _c(
+                  "li",
+                  {
+                    key: page,
+                    class: _vm.isCurrent(page) ? "active" : "inactive",
+                    on: {
+                      click: function($event) {
+                        return _vm.changePage(page)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(page))]
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  staticClass: "inactive",
+                  class: _vm.current_page >= _vm.last_page ? "disabled" : "",
+                  on: {
+                    click: function($event) {
+                      return _vm.changePage(_vm.current_page + 1)
+                    }
                   }
-                }
-              },
-              [_vm._v(_vm._s(page))]
-            )
-          }),
-          _vm._v(" "),
-          _c(
-            "li",
-            {
-              staticClass: "inactive",
-              class: _vm.current_page >= _vm.last_page ? "disabled" : "",
-              on: {
-                click: function($event) {
-                  return _vm.changePage(_vm.current_page + 1)
-                }
-              }
-            },
-            [_vm._v("＞＞")]
+                },
+                [_vm._v("»")]
+              )
+            ],
+            2
           )
-        ],
-        2
-      )
-    ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -61163,6 +61178,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "content" }, [
     _c("h2", [_vm._v(_vm._s(_vm.message))]),
+    _vm._v(" "),
+    _vm.finStatus
+      ? _c("h2", [_vm._v("本日の打刻は完了しております。お疲れ様でした！")])
+      : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "content_punch" }, [
       _vm.punchInStatus

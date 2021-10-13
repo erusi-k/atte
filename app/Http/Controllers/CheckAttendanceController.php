@@ -15,24 +15,24 @@ class CheckAttendanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // ステータスの確認処理
     public function punchInCheck(Request $request)
     {
-        
         $oldtimein = Attendance::where('user_id',$request->user_id)->latest()->first();
         $breaktimein = BreakTime::where('user_id',$request->user_id)->latest()->first();
-
         $oldDay = '';
         $breakDay = '';
+        $today  = Carbon::today();
         
         if($oldtimein){
-            $oldTimePunchIn = new Carbon($oldtimein->punchIn);
-            $oldDay = $oldTimePunchIn->startOfDay();
-        }
+            $oldDay = new Carbon($oldtimein->day);
+        }   
         if($breaktimein){
             $oldTimeBreakIn = new Carbon($breaktimein->breakIn);
             $breakDay = $oldTimeBreakIn->startOfDay();
         }
-        $today  = Carbon::today();
+        
 
         if(($oldDay == $today) && (empty($oldtimein->punchOut))){
             
@@ -46,19 +46,25 @@ class CheckAttendanceController extends Controller
                 $breakIn = true;
                 $breakOut =false;
                 }
-
         }else{
             $punchIn = true;
             $punchOut = false;
             $breakIn =  false;
             $breakOut = false;
         }
-
+        if((($oldDay == $today) && (!empty($oldtimein->punchOut)))){
+            $punchIn = false;
+            $punchOut = false;
+            $breakIn =  false;
+            $breakOut = false;
+            $fin = true;
+        }
         return response()->json([
             'punchIn'=>$punchIn,
             'punchOut'=>$punchOut,
             'breakIn'=>$breakIn,
-            'breakOut'=>$breakOut,
+            'breakOut'=>$breakOut,  
+            'fin'=>$fin,
         ]);     
     }
 

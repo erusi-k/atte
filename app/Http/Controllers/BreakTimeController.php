@@ -24,6 +24,8 @@ class BreakTimeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
+    //休憩入り処理
     public function store(Request $request)
     {
         $time = carbon::now();
@@ -54,6 +56,8 @@ class BreakTimeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    // 休憩戻り処理
     public function update(Request $request, $id)
     {
         $timestamp = BreakTime::where('user_id',$id)->latest()->first();

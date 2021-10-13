@@ -10,9 +10,11 @@ use App\Lib\My_func;
 
 class DataController extends Controller
 {
+
+    // 実績取得処理
     public function index(Request $request){
         $day = new Carbon($request->day);
-        $items = Attendance::where('day',$day)->paginate(5);
+        $items = Attendance::where('day',$day)->paginate(2);
         $breakSum='';
         $userName=[];
         $totalBreak=[];

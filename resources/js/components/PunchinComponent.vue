@@ -1,6 +1,7 @@
 <template>
     <div class="content">
         <h2>{{message}}</h2>
+        <h2 v-if="finStatus">本日の打刻は完了しております。お疲れ様でした！</h2>
         <div class="content_punch" >
             <p v-if="punchInStatus" @click="punchIn()">勤務開始</p>
             <p v-else class="inactive">勤務開始</p>
@@ -27,7 +28,10 @@ export default {
             punchOutStatus:false,
             breakInStatus:false,
             breakOutStatus:false,
+            finStatus:false,
             message:'',
+
+
 
         }
     },
@@ -38,7 +42,6 @@ export default {
                 user_id:this.user_id
             }
             const response = await axios.post("http://localhost:8000/api/attendance",sendData);
-            this.attendance_id=response.data.data.id;
             this.punchInStatus = false;
             this.punchOutStatus = true;
             this.breakInStatus = true;
@@ -49,7 +52,7 @@ export default {
             const id = this.user_id;
             const response = await axios.put("http://localhost:8000/api/attendance/"+id);
             console.log(response.data);
-            this.punchInStatus = true;
+            this.punchInStatus = false;
             this.punchOutStatus = false;
             this.breakInStatus = false;
             this.breakOutStatus =false;
@@ -84,8 +87,15 @@ export default {
             this.punchOutStatus = response.data.punchOut;
             this.breakInStatus = response.data.breakIn;
             this.breakOutStatus = response.data.breakOut;
+            this.finStatus = response.data.fin;
+            console.log(response.data.test);
             console.log(response.data);
         },
+    },
+    computed:{
+        finMessage(){
+            
+        }
     },
     created(){
         this.checkPunch();

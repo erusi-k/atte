@@ -25,15 +25,16 @@
             </tr>
         </table>
     </div>
-    <div class="pagination">
+    <!-- ページーネーション処理 -->
+    <div v-if="pageCheck" class="pagination">
         <ul class="pagination_content">
-            <li class="inactive" :class="(current_page == 1) ? 'disabled':''" @click ="changePage(current_page-1)">＜＜</li>
+            <li class="inactive" :class="(current_page == 1) ? 'disabled':''" @click ="changePage(current_page-1)">«</li>
             <li v-for="page in frontPageRange" :key="page" @click="changePage(page)" :class="(isCurrent(page)) ? 'active':'inactive'">{{page}}</li>
             <li v-show="front_dot" class="inactive disabled">...</li>
             <li v-for="page in middlePageRange" :key="page" @click="changePage(page)" :class="(isCurrent(page)) ? 'active':'inactive'">{{page}}</li>
             <li v-show="end_dot" class="inactive disabled">...</li>
-            <li v-for="page in endPageRange" :key="page" @click="changePage(page)" :class="(isCurrent(page)) ? 'active':'inactive'">{{page}}</li>
-            <li class="inactive" :class="(current_page >= last_page) ? 'disabled':''" @click="changePage(current_page+1)">＞＞</li>
+            <li v-for="page in endPageRange" :key="page" @click="changePage(page)" :class="(isCurrent(page))? 'active':'inactive'">{{page}}</li>
+            <li class="inactive" :class="(current_page >= last_page) ? 'disabled':''" @click="changePage(current_page+1)">»</li>
         </ul>
     </div>
 </div>
@@ -52,8 +53,9 @@ export default {
             range:5,
             front_dot:false,
             end_dot:false,
-            size:2,
+            end:false,
             message:true,
+            size:8,
         }
     },
     created(){
@@ -70,11 +72,13 @@ export default {
             let start = "";
             let end = "";
             if(!this.sizeCheck){
+                this.front_dot = false;
+                this.end_dot = false;
                 return [];
             }
             if(this.current_page <= this.range){
                 start = 3;
-                end = this.range + 2;
+                end = this.range +2;
                 this.front_dot = false;
                 this.end_dot = true;
             }else if (this.current_page > this.last_page - this.range){
@@ -91,13 +95,19 @@ export default {
             return this.calRange(start,end);
         },
         endPageRange(){
-            if(this.last_page == 1){
-                return this.calRange(2,1);
+            if(!this.sizeCheck){
+                return [];
             }
             return this.calRange(this.last_page -1, this.last_page);
         },
         sizeCheck(){
             if(this.last_page < this.size) {
+                return false;
+            }
+                return true;
+        },
+        pageCheck(){
+            if(this.last_page == 1){
                 return false;
             }
                 return true;
@@ -126,10 +136,6 @@ export default {
             console.log(this.message);
             this.current_page = request.data.data.current_page;
             this.last_page = request.data.data.last_page;
-            console.log(request.data.data.data.length);
-            console.log(request.data);
-            console.log(request.data.day);
-            console.log(request.data.test);
             this.check();
         },
         calRange(start,end){

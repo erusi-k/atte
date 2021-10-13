@@ -4,6 +4,7 @@ namespace App\Lib;
 
 class My_func 
 {
+    // 秒数を時分秒に変換する処理
     public static function s2h($seconds){
 
         $hours = floor($seconds / 3600);
