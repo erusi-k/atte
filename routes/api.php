@@ -6,6 +6,7 @@ use App\http\Controllers\AttendanceController;
 use App\http\Controllers\BreakTimeController;
 use App\http\Controllers\CheckAttendanceController;
 use App\http\Controllers\DataController;
+use App\http\Controllers\IndividualController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,4 @@ Route::apiResource('/attendance',AttendanceController::class);
 Route::apiResource('/breaktime',BreakTimeController::class);
 Route::get('/checkattendance',[CheckAttendanceController::class,'punchIncheck']);
 Route::get('/datarequest',[DataController::class,'index']);
+Route::get('/individual',[IndividualController::class,'index']);

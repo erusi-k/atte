@@ -3,11 +3,10 @@
         <h2>{{message}}</h2>
         <h2 v-if="finStatus">本日の打刻は完了しております。お疲れ様でした！</h2>
         <div class="content_punch" >
-            <p v-if="punchInStatus" @click="punchIn()">勤務開始</p>
+            <p v-if="punchInStatus" @click="punchIn">勤務開始</p>
             <p v-else class="inactive">勤務開始</p>
             <p v-if="punchOutStatus" @click="punchOut" >勤務終了</p>
             <p v-else class="inactive">勤務終了</p>
-
         </div>
         <div class="content_break">
             <p v-if="breakInStatus" @click="breakIn">休憩開始</p>
@@ -30,9 +29,6 @@ export default {
             breakOutStatus:false,
             finStatus:false,
             message:'',
-
-
-
         }
     },
     methods:{
@@ -111,7 +107,6 @@ p {
 }
 
 .content {
-    width:100%;
     background-color:#cccccc;
     padding:30px;
     font-family:"游ゴシック","ヒラギノ丸ゴ Pro",sans-serif;

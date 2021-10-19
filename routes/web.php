@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\IndividualController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +16,10 @@ use App\Http\Controllers\DataController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 Route::get('/home',[HomeController::class,'index'])->middleware('auth');
-Route::get('/datalist',[DataController::class,'show']);
-Route::get('/dashboard', [HomeController::class,'index']);
+Route::get('/datalist',[DataController::class,'show'])->middleware('auth');
+Route::get('/dashboard', [HomeController::class,'index'])->middleware('auth');
+Route::get('/individual',[IndividualController::class,'show'])->middleware('auth');
 
 require __DIR__.'/auth.php';

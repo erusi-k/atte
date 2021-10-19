@@ -3,7 +3,7 @@
     <div class="content">
         <div class="day"  @click="requestData">
             <img class="day_sub" src="/images/ya.png" @click="subtractDay">
-            <p class="day_display">{{day.format('YYYY-MM-DD')}}</p>
+            <p class="day_display">{{day.format('YYYY年MM月DD日')}}</p>
             <img class="day_add" src="/images/ya.png" @click="addDay">
             </div>
         <p class="content-message" v-if="message">実績がありません。</p>
