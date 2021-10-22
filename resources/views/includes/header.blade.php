@@ -3,6 +3,8 @@
     <ul class="header-list">
         <li><a class="header-list_content" href="{{url('/home')}}">ホーム</a></li>
         <li><a class="header-list_content" href="{{url('/datalist')}}">日付一覧</a></li>
+        <li><a class="header-list_content" href="{{url('/individual')}}">個人実績一覧</a></li>
+        <li><a class="header-list_content" href="{{url('/userlist')}}">登録者一覧</a></li>
         <li class="header-list_content">
             <form method="POST" action="{{ route('logout') }}">
             @csrf

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\IndividualController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,5 +22,6 @@ Route::get('/home',[HomeController::class,'index'])->middleware('auth');
 Route::get('/datalist',[DataController::class,'show'])->middleware('auth');
 Route::get('/dashboard', [HomeController::class,'index'])->middleware('auth');
 Route::get('/individual',[IndividualController::class,'show'])->middleware('auth');
+Route::get('/userlist',[UserController::class,'index'])->middleware('auth');
 
 require __DIR__.'/auth.php';

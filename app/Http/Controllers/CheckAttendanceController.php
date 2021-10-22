@@ -51,6 +51,7 @@ class CheckAttendanceController extends Controller
             $punchOut = false;
             $breakIn =  false;
             $breakOut = false;
+            $fin = false;
         }
         if((($oldDay == $today) && (!empty($oldtimein->punchOut)))){
             $punchIn = false;

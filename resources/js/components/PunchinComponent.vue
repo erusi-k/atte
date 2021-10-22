@@ -37,23 +37,35 @@ export default {
             const sendData = {
                 user_id:this.user_id
             }
-            const response = await axios.post("http://localhost:8000/api/attendance",sendData);
-            this.punchInStatus = false;
-            this.punchOutStatus = true;
-            this.breakInStatus = true;
-            this.message ='出勤しました！'
+            await axios.post("http://localhost:8000/api/attendance",sendData)
+            .then(() => {
+                this.punchInStatus = false;
+                this.punchOutStatus = true;
+                this.breakInStatus = true;
+                this.message ='出勤しました！'
+            })
+            .catch((error)=> {
+                console.log(error);
+                alert('通信に失敗しました。もう一度お試しください。')
+            })
+            
         },
 
         //退勤打刻
         async punchOut(){
             const id = this.user_id;
-            const response = await axios.put("http://localhost:8000/api/attendance/"+id);
-            console.log(response.data);
-            this.punchInStatus = false;
-            this.punchOutStatus = false;
-            this.breakInStatus = false;
-            this.breakOutStatus =false;
-            this.message = '退勤しました！'
+            await axios.put("http://localhost:8000/api/attendance/"+id)
+            .then(()=> {
+                this.punchInStatus = false;
+                this.punchOutStatus = false;
+                this.breakInStatus = false;
+                this.breakOutStatus =false;
+                this.message = '退勤しました！'
+            })
+            .catch((error) => {
+                console.log(error);
+                alert('通信に失敗しました。もう一度お試しください');
+            })
         },
 
         // 休憩入り
@@ -61,31 +73,51 @@ export default {
             const sendData ={
                 user_id:this.user_id,
             }
-            const response = await axios.post("http://localhost:8000/api/breaktime",sendData);
-            this.message = response.data.message
-            this.breakInStatus = false;
-            this.breakOutStatus = true;
-            this.punchOutStatus = false;
+            await axios.post("http://localhost:8000/api/breaktime",sendData)
+            .then((response) => {
+                this.message = response.data.message
+                this.breakInStatus = false;
+                this.breakOutStatus = true;
+                this.punchOutStatus = false;
+            })
+            .catch((error) => {
+                console.log(error);
+                alert('通信に失敗しました。もう一度お試しください。')
+            })
+            
         },
 
         //休憩戻り
         async breakOut(){
             const id = this.user_id;
-            const response = await axios.put("http://localhost:8000/api/breaktime/"+id);
-            this.message = response.data.message;
-            this.breakInStatus = true;
-            this.breakOutStatus = false;
-            this.punchOutStatus = true;
+            await axios.put("http://localhost:8000/api/breaktime/"+id)
+            .then((response) => {
+                this.message = response.data.message;
+                this.breakInStatus = true;
+                this.breakOutStatus = false;
+                this.punchOutStatus = true;
+            })
+            .catch((error) => {
+                console.log(error);
+                alert('通信に失敗しました。もう一度お試しください。')
+            })
         },
 
         // ステータスチェック
         async checkPunch(){
-            const response = await axios.get("http://localhost:8000/api/checkattendance",{params:{user_id:this.user_id}});
-            this.punchInStatus = response.data.punchIn;
-            this.punchOutStatus = response.data.punchOut;
-            this.breakInStatus = response.data.breakIn;
-            this.breakOutStatus = response.data.breakOut;
-            this.finStatus = response.data.fin;
+            await axios.get("http://localhost:8000/api/checkattendance",{params:{user_id:this.user_id}})
+            .then((response) => {
+                this.punchInStatus = response.data.punchIn;
+                this.punchOutStatus = response.data.punchOut;
+                this.breakInStatus = response.data.breakIn;
+                this.breakOutStatus = response.data.breakOut;
+                this.finStatus = response.data.fin;
+            })
+            .catch((error) => {
+                console.log(error);
+                alert('通信に失敗しました。もう一度お試しください。')
+            })
+            
         },
     },
     created(){

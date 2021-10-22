@@ -23,8 +23,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('/attendance',AttendanceController::class);
-Route::apiResource('/breaktime',BreakTimeController::class);
+Route::apiResource('/attendance',AttendanceController::class)->only([
+    'store','update'
+]);
+Route::apiResource('/breaktime',BreakTimeController::class)->only([
+    'store','update'
+]);;
 Route::get('/checkattendance',[CheckAttendanceController::class,'punchIncheck']);
 Route::get('/datarequest',[DataController::class,'index']);
 Route::get('/individual',[IndividualController::class,'index']);

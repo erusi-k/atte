@@ -1,5 +1,6 @@
 <template>
 <div id="app">
+    <h2>日付別実績一覧</h2>
     <div class="content">
         <div class="day"  @click="requestData">
             <img class="day_sub" src="/images/ya.png" @click="subtractDay">
@@ -131,15 +132,21 @@ export default {
         // 実績データ取得処理
         async requestData(){
             let item = this.day.format('YYYY-MM-DD')
-            const request =await axios.get(`http://localhost:8000/api/datarequest?page=${this.current_page}`,{params:{day:item}});
-            this.datas = request.data.data.data;
-            if(request.data.data.data.length >0){
+            await axios.get(`http://localhost:8000/api/datarequest?page=${this.current_page}`,{params:{day:item}})
+            .then((response) => {
+                this.datas = response.data.data.data;
+            if(response.data.data.data.length >0){
                 this.message = false;
             }else{
                 this.message = true;
             }
-            this.current_page = request.data.data.current_page;
-            this.last_page = request.data.data.last_page;
+            this.current_page = response.data.data.current_page;
+            this.last_page = response.data.data.last_page;
+            })
+            .catch((error) => {
+                console.log(error);
+                alert('通信に失敗しました。もう一度お試しください。')
+            })
         },
 
         calRange(start,end){
@@ -187,9 +194,7 @@ export default {
     text-align: center;
 }
 
-.pagination_content li + li {
-    border-left:none;
-}
+
 
 .active {
     background-color:aqua;
@@ -212,6 +217,8 @@ h2 {
 
 img { 
     display:block;
+    width:20px;
+    height:20px;
 }
 
 ul { 
@@ -269,10 +276,6 @@ table tr{
     color:#000000;
 }
 
-img { 
-    width:20px;
-    height:20px;
-}
 
 
 </style>
