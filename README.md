@@ -1,2 +1,20 @@
 # 勤怠
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 機能
+
+### 1.ログイン機能
+
+### 2.勤怠管理機能
+　　　◉ログインユーザーの出勤、退勤、休憩開始、休憩終了を打刻可能
+　　　・同じ日に２度出勤打刻ができない仕様
+ 　・休憩は同じ日に何度も打刻可能
+  
+ 　◉勤怠実績
+  　・ログインユーザーの勤怠実績を選択した月毎に表示
+   
+ 　◉日次勤怠
+   ・選択した日次に打刻された全登録ユーザーの勤怠実績を表示
+   
+ 　◉登録ユーザー
+  　・登録しているユーザー一覧を表示
+
+  
