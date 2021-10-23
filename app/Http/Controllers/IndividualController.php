@@ -16,6 +16,8 @@ class IndividualController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //ユーザー別実績データ取得
     public function index(Request $request)
     {   
         $year = substr($request->day,0,4);

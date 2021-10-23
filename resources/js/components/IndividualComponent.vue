@@ -46,16 +46,19 @@ export default {
     },
     methods:{
         
+        // 月の追加
         addMonth(){
             this.month = moment(this.month).add(1,'month');
             this.getData();
         },
 
+        // 月の減算
         subtractMonth(){
             this.month = moment(this.month).subtract(1,'month');
             this.getData();
         },
 
+        // 実績データ取得
         async getData(){
             await axios.get("http://localhost:8000/api/individual",{params:{user_id:this.user_id,day:this.month.format('YYYY-MM')}})
             .then((response) => {
@@ -74,6 +77,7 @@ export default {
     },
 
     computed:{
+        // 日付ごとにデータ表示
         dataList(){
             this.last_day = moment(this.month).endOf('month');
             this.day = moment(this.month).startOf('month');
