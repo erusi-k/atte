@@ -1,0 +1,1 @@
+web: vndero/bin/heroku-php-apache2 puclic/
