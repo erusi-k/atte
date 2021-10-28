@@ -2,7 +2,6 @@
     <div class="content">
         <h2>{{message}}</h2>
         <h2 v-if="finStatus">本日の打刻は完了しております。お疲れ様でした！</h2>
-        <p>{{user_id}}</p>
         <div class="content_punch" >
             <p v-if="punchInStatus" @click="punchIn">勤務開始</p>
             <p v-else class="inactive">勤務開始</p>
@@ -38,7 +37,7 @@ export default {
             const sendData = {
                 user_id:this.user_id
             }
-            await axios.post("https://whispering-wildwood-63075.herokuapp.com/api/attendance",sendData)
+            await axios.post("https:/whispering-wildwood-63075.herokuapp.com/api/attendance",sendData)
             .then(() => {
                 this.punchInStatus = false;
                 this.punchOutStatus = true;
