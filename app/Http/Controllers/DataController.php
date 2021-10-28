@@ -60,6 +60,6 @@ class DataController extends Controller
 }
 
     public function show(){
-        return view('datalist');
+        return view('dataList');
     }
 }
