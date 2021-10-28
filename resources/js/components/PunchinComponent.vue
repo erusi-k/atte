@@ -4,7 +4,7 @@
         <h2 v-if="finStatus">本日の打刻は完了しております。お疲れ様でした！</h2>
         <p>{{user_id}}</p>
         <div class="content_punch" >
-            <p v-if="punchInStatus" @click="punchIn">勤務開始</p>
+            <p v-if="punchInStatus" @click="punchIn">勤務開始!!!!</p>
             <p v-else class="inactive">勤務開始</p>
             <p v-if="punchOutStatus" @click="punchOut" >勤務終了</p>
             <p v-else class="inactive">勤務終了</p>
