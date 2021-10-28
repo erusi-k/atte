@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Attendance;
-use App\models\BreakTime;
+use App\Models\BreakTime;
 use Carbon\Carbon;
 use App\Lib\My_func;
 
