@@ -2,11 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\http\Controllers\AttendanceController;
-use App\http\Controllers\BreakTimeController;
-use App\http\Controllers\CheckAttendanceController;
-use App\http\Controllers\DataController;
-use App\http\Controllers\IndividualController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\BreakTimeController;
+use App\Http\Controllers\CheckAttendanceController;
+use App\Http\Controllers\DataController;
+use App\Http\Controllers\IndividualController;
 
 /*
 |--------------------------------------------------------------------------
