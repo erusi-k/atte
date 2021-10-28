@@ -132,7 +132,7 @@ export default {
         // 実績データ取得処理
         async requestData(){
             let item = this.day.format('YYYY-MM-DD')
-            await axios.get(`http://localhost:8000/api/datarequest?page=${this.current_page}`,{params:{day:item}})
+            await axios.get(`https://whispering-wildwood-63075.herokuapp.com/api/datarequest?page=${this.current_page}`,{params:{day:item}})
             .then((response) => {
                 this.datas = response.data.data.data;
             if(response.data.data.data.length >0){

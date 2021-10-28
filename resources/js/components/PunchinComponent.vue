@@ -4,7 +4,7 @@
         <h2 v-if="finStatus">本日の打刻は完了しております。お疲れ様でした！</h2>
         <p>{{user_id}}</p>
         <div class="content_punch" >
-            <p v-if="punchInStatus" @click="punchIn">勤務開始!!!!</p>
+            <p v-if="punchInStatus" @click="punchIn">勤務開始</p>
             <p v-else class="inactive">勤務開始</p>
             <p v-if="punchOutStatus" @click="punchOut" >勤務終了</p>
             <p v-else class="inactive">勤務終了</p>
@@ -55,7 +55,7 @@ export default {
         //退勤打刻
         async punchOut(){
             const id = this.user_id;
-            await axios.put("http://localhost:8000/api/attendance/"+id)
+            await axios.put("https://whispering-wildwood-63075.herokuapp.com/api/attendance/"+id)
             .then(()=> {
                 this.punchInStatus = false;
                 this.punchOutStatus = false;
@@ -74,7 +74,7 @@ export default {
             const sendData ={
                 user_id:this.user_id,
             }
-            await axios.post("http://localhost:8000/api/breaktime",sendData)
+            await axios.post("https://whispering-wildwood-63075.herokuapp.com/api/breaktime",sendData)
             .then((response) => {
                 this.message = response.data.message
                 this.breakInStatus = false;
@@ -91,7 +91,7 @@ export default {
         //休憩戻り
         async breakOut(){
             const id = this.user_id;
-            await axios.put("http://localhost:8000/api/breaktime/"+id)
+            await axios.put("https://whispering-wildwood-63075.herokuapp.com/api/breaktime/"+id)
             .then((response) => {
                 this.message = response.data.message;
                 this.breakInStatus = true;
@@ -106,7 +106,7 @@ export default {
 
         // ステータスチェック
         async checkPunch(){
-            await axios.get("http://localhost:8000/api/checkattendance",{params:{user_id:this.user_id}})
+            await axios.get("https://whispering-wildwood-63075.herokuapp.com/api/checkattendance",{params:{user_id:this.user_id}})
             .then((response) => {
                 this.punchInStatus = response.data.punchIn;
                 this.punchOutStatus = response.data.punchOut;
