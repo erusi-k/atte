@@ -177,6 +177,13 @@ table tr{
     color:#000000;
 }
 
+@media screen and (max-width:600px){
+    
+
+    table td{
+        font-size:10px
+    }
+}    
 </style>
 
 
