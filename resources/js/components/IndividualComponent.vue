@@ -182,7 +182,7 @@ table tr{
     
 
     table th{
-        font-size:5px
+        font-size:10px
     }
 }    
 </style>
