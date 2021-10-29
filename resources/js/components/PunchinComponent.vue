@@ -2,7 +2,7 @@
     <div class="content">
         <h2>{{message}}</h2>
         <h2 v-if="finStatus">本日の打刻は完了しております。お疲れ様でした！</h2>
-        <div class="content_punch" >
+        <div class="content_punch " >
             <p v-if="punchInStatus" @click="punchIn">勤務開始</p>
             <p v-else class="inactive">勤務開始</p>
             <p v-if="punchOutStatus" @click="punchOut" >勤務終了</p>
@@ -163,6 +163,18 @@ p {
 
 .inactive {
     color:#eeeeee;
+}
+
+@media screen and (max-width:600px){
+    .content_punch , .content_break  {
+        display:flex;
+        flex-flow:column;
+    }
+
+    .content_punch p ,.content_break p  {
+        width:100%;
+        margin-top:25px;
+    }
 }
 
 

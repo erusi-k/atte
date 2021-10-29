@@ -19,6 +19,10 @@ h2 {
     text-align: center;
 }
 
+#nav {
+    display:none;
+}
+
 .errors {
     color:red;
 }
@@ -29,6 +33,7 @@ h2 {
     padding:10px;
     font-size:1.5em;
 }
+
 
 .header {
     display:flex;
@@ -113,6 +118,9 @@ h2 {
     margin :10px;
 }
 
+
+
+
 table {
     border-collapse: collapse;
     border-spacing: 5px;
@@ -141,3 +149,105 @@ table tr{
     background-color: #fff;
     color:#000000;
 }
+
+
+
+
+@media screen and (max-width:600px) {
+
+    .header-list {
+        display:none;
+    }
+
+/* ハンバーガーメニュー */
+    #nav{
+        display:block;
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background: #ffffff;
+        transition: .7s;
+        z-index:1;
+    }
+    #nav ul{
+        padding-top: 80px;
+    }
+    #nav ul li{
+        widht:80%;
+        list-style-type: none;
+        font-size: 20px;
+        
+    }
+    .link{
+        display: block;
+        text-decoration: none;
+        color: #ccccc;
+        margin: 15px 15px;
+        padding: 10px;
+        transition: .5s;
+    }
+    .link:hover{
+        color: #ffffff;
+        background: #cd5c5c;
+        border-bottom: none;
+    }
+
+    #hamburger {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        width: 50px;
+        height: 44px;
+        cursor: pointer;
+        transition: 1s;
+        z-index:2;
+    }
+
+    .inner_line {
+        display: block;
+        position: absolute;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: #000;
+        transition: 1s;
+        border-radius: 4px;
+    }
+
+    #line1 {
+        top: 0;
+    }
+    #line2 {
+        top: 20px;
+    }
+    #line3 {
+        bottom: 0px;
+    }
+
+    .in{
+        widht:80%;
+        transform: translateX(100%);
+    }
+    .in ul li {
+        widht:80%;
+    }
+    .line_1,.line_2,.line_3{
+        background: #000000;
+    }
+    .line_1 {
+
+        transform: translateY(20px) rotate(-315deg);
+    }
+    .line_2 {
+        opacity: 0;
+    }
+    .line_3 {
+        transform: translateY(-20px) rotate(315deg);
+    }
+    /* ハンバーガーメニュー終わり */
+}
+
+
