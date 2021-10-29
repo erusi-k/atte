@@ -61,6 +61,7 @@ export default {
         // 実績データ取得
         async getData(){
             await axios.get("https://whispering-wildwood-63075.herokuapp.com/api/individual",{params:{user_id:this.user_id,day:this.month.format('YYYY-MM')}})
+            // await axios.get('http://localhost:8000/api/individual',{params:{user_id:this.user_id,day:this.month.format('YYYY-MM')}})
             .then((response) => {
                 this.data = response.data.data;
                 if(response.data.data == ''){
@@ -180,7 +181,7 @@ table tr{
 @media screen and (max-width:600px){
     
 
-    table td{
+    table th{
         font-size:5px
     }
 }    

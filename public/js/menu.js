@@ -8,4 +8,3 @@ function hamburger() {
     hamburger();
 } );
 
-console.log('js動作確認です');
