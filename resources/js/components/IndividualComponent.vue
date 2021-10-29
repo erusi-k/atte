@@ -181,7 +181,7 @@ table tr{
     
 
     table td{
-        font-size:10px
+        font-size:5px
     }
 }    
 </style>
