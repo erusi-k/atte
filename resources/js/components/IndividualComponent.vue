@@ -11,18 +11,18 @@
 
         <table v-else>
             <tr>
-                <th>日付</th>
-                <th>出勤時間</th>
-                <th>退勤時間</th>
-                <th>休憩時間</th>
-                <th>勤務時間</th>
+                <th class="table_th">日付</th>
+                <th class="table_th">出勤時間</th>
+                <th class="table_th">退勤時間</th>
+                <th class="table_th">休憩時間</th>
+                <th class="table_th">勤務時間</th>
             </tr>
             <tr v-for="item in dataList" :key="item.id">
-                <th>{{item.day}}</th>
-                <th>{{item.punchIn}}</th>
-                <th>{{item.punchOut}}</th>
-                <th>{{item.break}}</th>
-                <th>{{item.total}}</th>
+                <td class="tabel_td">{{item.day}}</td>
+                <td class="tabel_td">{{item.punchIn}}</td>
+                <td class="tabel_td">{{item.punchOut}}</td>
+                <td class="tabel_td">{{item.break}}</td>
+                <td class="tabel_td">{{item.total}}</td>
             </tr>
         </table>
     </div>     
@@ -60,8 +60,8 @@ export default {
 
         // 実績データ取得
         async getData(){
-            await axios.get("https://whispering-wildwood-63075.herokuapp.com/api/individual",{params:{user_id:this.user_id,day:this.month.format('YYYY-MM')}})
-            // await axios.get('http://localhost:8000/api/individual',{params:{user_id:this.user_id,day:this.month.format('YYYY-MM')}})
+            // await axios.get("https://whispering-wildwood-63075.herokuapp.com/api/individual",{params:{user_id:this.user_id,day:this.month.format('YYYY-MM')}})
+            await axios.get('http://localhost:8000/api/individual',{params:{user_id:this.user_id,day:this.month.format('YYYY-MM')}})
             .then((response) => {
                 this.data = response.data.data;
                 if(response.data.data == ''){
@@ -154,7 +154,7 @@ table {
     border-spacing: 5px;
     margin: 0 auto;
     padding: 0;
-    width: 90%;
+    width: 95%;
     margin-left: auto;
     margin-right: auto;
 
@@ -180,9 +180,12 @@ table tr{
 
 @media screen and (max-width:600px){
     
+    .table_th {
+        font-size:15px;
+    }
 
-    table th{
-        font-size:10px
+    .tabel_td{
+        font-size: 12px;
     }
 }    
 </style>
